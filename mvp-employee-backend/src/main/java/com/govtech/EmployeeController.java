@@ -3,7 +3,7 @@ package com.govtech;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -33,7 +33,7 @@ public class EmployeeController {
     public ResponseEntity<Map> uploadUsers(){
         Map<String, Integer> returnMap = new HashMap<>();
         try {
-            jobLauncher.run(job, new JobParameters());
+            jobLauncher.run(job, new JobParametersBuilder().addLong("uniqueness", System.nanoTime()).toJobParameters());
         } catch ( JobExecutionAlreadyRunningException
                   | JobRestartException
                   | JobInstanceAlreadyCompleteException
