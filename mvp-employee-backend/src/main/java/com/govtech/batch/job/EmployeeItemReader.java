@@ -28,7 +28,6 @@ public class EmployeeItemReader implements ItemReader<Employee> {
 
         employeeFlatFileItemReader = new FlatFileItemReaderBuilder<Employee>()
                 .name("employeeItemReader")
-                .encoding("ISO-8859-1")
                 .resource(getResource())
                 .delimited()
                 .delimiter(",")
