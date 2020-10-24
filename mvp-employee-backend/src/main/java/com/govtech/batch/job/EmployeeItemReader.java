@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-
 @Component
 public class EmployeeItemReader implements ItemReader<Employee> {
 
@@ -54,7 +52,7 @@ public class EmployeeItemReader implements ItemReader<Employee> {
     }
 
     public FileSystemResource getResource(){
-        FileSystemResource fileSystemResource = new FileSystemResource(dataFileDir +"employee.txt");
+        FileSystemResource fileSystemResource = new FileSystemResource(dataFileDir +"employee.csv");
         LOGGER.info( "FileSystemResource path :" + fileSystemResource.getPath() );
         if(!fileSystemResource.exists()){
             fileSystemResource = new FileSystemResource(dataFileDir +"employee.txt");
