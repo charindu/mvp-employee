@@ -9,4 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
+    Employee findByEmployeeId( String employeeId);
+
 }
