@@ -17,6 +17,9 @@ public class EmployeeItemProcessor implements ItemProcessor<Employee, Employee> 
         String loginName = employee.getLoginName();
         String name = employee.getName();
         double salary = employee.getSalary();
+        if( salary <0){
+            return null;
+        }
 
         Employee transformedEmployee = new Employee( employeeId, loginName, name, salary);
         LOGGER.info("Converting (" + employee + ") into (" + transformedEmployee + ")");
