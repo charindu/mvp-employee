@@ -41,4 +41,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> employeesPage = employeeRepo.findBySalaryBetween( minSalary, maxSalary, pageable);
         return employeesPage.getContent();
     }
+
+    @Override
+    public Employee getEmployeeById(Long id) {
+        return employeeRepo.findById(id).get();
+    }
+
+    @Override
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepo.save(employee);
+    }
+
+    @Override
+    public boolean deleteEmployeeById(Long id) {
+        employeeRepo.deleteById( id);
+        return true;
+    }
 }

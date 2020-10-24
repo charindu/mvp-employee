@@ -10,5 +10,11 @@ public interface EmployeeService {
 
     List<Employee> getEmployeesByCriteria(double minSalary, double maxSalary, int offset, int limit, String order, String column);
 
+    Employee getEmployeeById(Long id);
+
+    Employee saveEmployee(Employee employee);
+
+    boolean deleteEmployeeById( Long id);
+
 }
 

@@ -2,6 +2,7 @@ package com.govtech.controller;
 
 import com.govtech.model.Employee;
 import com.govtech.service.EmployeeService;
+import com.sun.istack.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -13,7 +14,9 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,6 +90,69 @@ public class EmployeeController {
         return ResponseEntity.ok(returnMap);
     }
 
+    @PostMapping( path = "/users/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map> createEmployee(@PathVariable(name = "id") @NotNull final Long id,
+                                              @Validated @RequestBody(required = false) Employee employee){
+        Map<String, Object> returnMap = new HashMap<>();
+
+        if(employee.equals(null) || id ==null || id<0){
+            returnMap.put("status", HttpStatus.BAD_REQUEST.value());
+        }else {
+            employeeService.saveEmployee( employee);
+            returnMap.put("status", HttpStatus.OK.value());
+        }
+        return ResponseEntity.ok(returnMap);
+    }
+
+    @PatchMapping( path = "/users/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map> updateEmployee( @PathVariable(name = "id") @NotNull final Long id,
+                                               @Validated @RequestBody(required = false) Employee employee ){
+
+        Map<String, Object> returnMap = new HashMap<>();
+        if(employee.equals(null) || id ==null || id<0){
+            returnMap.put("status", HttpStatus.BAD_REQUEST.value());
+        }else {
+            employeeService.saveEmployee( employee);
+            returnMap.put("status", HttpStatus.OK.value());
+        }
+        return ResponseEntity.ok(returnMap);
+    }
+
+    @GetMapping( path = "/users/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map> getEmployeeById( @PathVariable(name = "id") @NotNull final Long id ){
+
+        Map<String, Object> returnMap = new HashMap<>();
+        if(id ==null || id<0){
+            returnMap.put("status", HttpStatus.BAD_REQUEST.value());
+        }else {
+            Employee employee = employeeService.getEmployeeById(id);
+            if(employee != null){
+                returnMap.put("status", HttpStatus.OK.value());
+                returnMap.put("result", employee);
+            }else {
+                returnMap.put("status", HttpStatus.NO_CONTENT.value());
+            }
+        }
+        return ResponseEntity.ok(returnMap);
+    }
+
+    @DeleteMapping( path = "/users/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map> deleteEmployee( @PathVariable(name = "id") @NotNull final Long id ){
+
+        Map<String, Object> returnMap = new HashMap<>();
+        if(id ==null || id<0){
+            returnMap.put("status", HttpStatus.BAD_REQUEST.value());
+        }
+        boolean isDeleted = employeeService.deleteEmployeeById(id);
+        if(isDeleted){
+            returnMap.put("status", HttpStatus.OK.value());
+        }else {
+            returnMap.put("status", HttpStatus.NO_CONTENT.value());
+        }
+        return ResponseEntity.ok(returnMap);
+    }
+
+    //Exception handler
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Map> handleMissingParams(MissingServletRequestParameterException ex) {
         Map<String, Object> returnMap = new HashMap<>();
