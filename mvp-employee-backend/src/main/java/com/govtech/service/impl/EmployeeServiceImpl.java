@@ -54,7 +54,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean deleteEmployeeById(Long id) {
-        employeeRepo.deleteById( id);
-        return true;
+        boolean isExist = employeeRepo.existsById(id);
+        if(isExist){
+            employeeRepo.deleteById( id);
+            return true;
+        }
+        return false;
     }
 }

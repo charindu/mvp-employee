@@ -15,4 +15,6 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
     Page<Employee> findBySalaryBetween(Double minSalary, Double maxSalary, Pageable pageRequest);
 
+    boolean existsById( Long id);
+
 }
