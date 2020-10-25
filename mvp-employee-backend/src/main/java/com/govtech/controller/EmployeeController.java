@@ -84,7 +84,7 @@ public class EmployeeController {
         }
         if(isValidParams){
             List<Employee> employeeList =  employeeService.getEmployeesByCriteria( minSalary, maxSalary, offset, limit, sortOrder, sortColumn);
-            returnMap.put("result", employeeList);
+            returnMap.put("results", employeeList);
             returnMap.put("status", HttpStatus.OK.value());
         }
 

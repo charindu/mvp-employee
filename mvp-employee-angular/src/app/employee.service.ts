@@ -24,14 +24,19 @@ export class EmployeeService {
   }
 
   deleteEmployee(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.baseUrl}/users/${id}`);
   }
 
   searchEmployeesList(minSalary: number, maxSalary: number): Observable<any> {
+    debugger;
     return this.http.get(`${this.baseUrl}/users?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=0&limit=30&sort=+name`);
   }
 
   getEmployeesList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/allusers`);
+  }
+
+  uploadEmployees(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/users/upload`, null);
   }
 }

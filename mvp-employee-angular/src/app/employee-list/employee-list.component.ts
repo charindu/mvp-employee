@@ -21,13 +21,49 @@ export class EmployeeListComponent implements OnInit {
     this.employees = this.employeeService.getEmployeesList();
   }
 
-  deleteEmployee(id: number): void {
-    this.employeeService.deleteEmployee(id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.reloadData();
-        },
-        error => console.log(error));
+  deleteEmployee(id: number, loginName: string): void {
+    if (confirm('Are you sure, you want to delete ' + loginName + '?')) {
+      this.employeeService.deleteEmployee(id)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.reloadData();
+          },
+          error => {
+            console.log(error);
+          });
+    }
+  }
+
+  searchEmployees(minSalary: any, maxSalary: any): void{
+    if (minSalary !== '' && maxSalary !== ''){
+      this.employeeService.searchEmployeesList(minSalary, maxSalary)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.employees = data.results;
+            //this.reloadData();
+          },
+          error => {
+            console.log(error);
+          });
+    }
+    if ((minSalary === '' && maxSalary === '')){
+      this.reloadData();
+    }
+  }
+
+  upload(): void{
+    if (confirm('Do you want to continue to upload employees ?')) {
+      this.employeeService.uploadEmployees()
+        .subscribe(
+          data => {
+            console.log(data);
+            this.reloadData();
+          },
+          error => {
+            console.log(error);
+          });
+    }
   }
 }
