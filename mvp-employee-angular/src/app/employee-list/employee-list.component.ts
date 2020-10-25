@@ -14,7 +14,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 export class EmployeeListComponent implements OnInit  {
 
-  employees: Observable<Employee[]>;
+  // employees: Observable<Employee[]>;
+  employees: Employee[];
   title = 'modal2';
 
   // constructor(private employeeService: EmployeeService) {}
@@ -26,7 +27,9 @@ export class EmployeeListComponent implements OnInit  {
   }
 
   reloadData(): void {
-    this.employees = this.employeeService.getEmployeesList();
+    this.employeeService.getEmployeesList().subscribe(item => {
+      this.employees = item;
+    });
   }
 
   openModal(user): void {
@@ -55,12 +58,10 @@ export class EmployeeListComponent implements OnInit  {
 
   searchEmployees(minSalary: any, maxSalary: any): void{
     if (minSalary !== '' && maxSalary !== ''){
-      this.employeeService.searchEmployeesList(minSalary, maxSalary)
-        .subscribe(
+      this.employeeService.searchEmployeesList(minSalary, maxSalary).subscribe(
           data => {
             console.log(data);
             this.employees = data.results;
-            //this.reloadData();
           },
           error => {
             console.log(error);
