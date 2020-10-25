@@ -34,7 +34,10 @@
         <td>{{employee.loginName}}</td>
         <td>{{employee.name}}</td>
         <td>{{employee.salary}}</td>
-        <td><button type="button" class="btn btn-outline-info form-group mx-sm-3" (click)='deleteEmployee(employee.id, employee.loginName)'>Delete</button></td>
+        <td>
+          <button type="button" class="btn btn-outline-info form-group mx-sm-3" (click)="openModal(employee)">Edit</button>
+          <button type="button" class="btn btn-outline-info form-group mx-sm-3" (click)='deleteEmployee(employee.id, employee.loginName)'>Delete</button>
+        </td>
       </tr>
       </tbody>
     </table>

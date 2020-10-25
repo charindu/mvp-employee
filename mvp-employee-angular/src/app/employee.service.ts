@@ -12,15 +12,15 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   getEmployee(id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/users/${id}`);
   }
 
   createEmployee(id: number, employee: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/${id}`, employee);
+    return this.http.post(`${this.baseUrl}/users/${id}`, employee);
   }
 
   updateEmployee(id: number, value: any): Observable<Object> {
-    return this.http.patch(`${this.baseUrl}/${id}`, value);
+    return this.http.patch(`${this.baseUrl}/users/${id}`, value);
   }
 
   deleteEmployee(id: number): Observable<any> {
