@@ -27,9 +27,8 @@ export class EmployeeService {
     return this.http.delete(`${this.baseUrl}/users/${id}`);
   }
 
-  searchEmployeesList(minSalary: number, maxSalary: number): Observable<any> {
-    debugger;
-    return this.http.get(`${this.baseUrl}/users?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=0&limit=30&sort=+name`);
+  searchEmployeesList(minSalary: number, maxSalary: number, page: number, limit: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${page}&limit=${limit}&sort=+name`);
   }
 
   getEmployeesList(): Observable<any> {

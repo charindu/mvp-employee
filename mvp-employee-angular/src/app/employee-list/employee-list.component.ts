@@ -15,6 +15,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class EmployeeListComponent implements OnInit  {
 
   // employees: Observable<Employee[]>;
+  page = 1;
+  collectionSize = 10;
+  pageSize = 30;
   employees: Employee[];
   title = 'modal2';
 
@@ -27,9 +30,7 @@ export class EmployeeListComponent implements OnInit  {
   }
 
   reloadData(): void {
-    this.employeeService.getEmployeesList().subscribe(item => {
-      this.employees = item;
-    });
+    this.searchEmployees(-1, -1);
   }
 
   openModal(user): void {
@@ -56,20 +57,21 @@ export class EmployeeListComponent implements OnInit  {
     }
   }
 
-  searchEmployees(minSalary: any, maxSalary: any): void{
-    if (minSalary !== '' && maxSalary !== ''){
-      this.employeeService.searchEmployeesList(minSalary, maxSalary).subscribe(
-          data => {
-            console.log(data);
-            this.employees = data.results;
-          },
-          error => {
-            console.log(error);
-          });
+  searchEmployees(minSalary: any, maxSalary: any): void {
+    if (!(typeof minSalary !== 'undefined' && minSalary !== '' && typeof maxSalary !== 'undefined' && maxSalary !== '')) {
+      minSalary = -1;
+      maxSalary = -1;
     }
-    if ((minSalary === '' && maxSalary === '')){
-      this.reloadData();
-    }
+
+    this.employeeService.searchEmployeesList(minSalary, maxSalary, (this.page - 1), this.pageSize).subscribe(
+      data => {
+        console.log(data);
+        this.collectionSize = data.collectionSize;
+        this.employees = data.results;
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   upload(): void{

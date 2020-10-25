@@ -41,5 +41,11 @@
       </tr>
       </tbody>
     </table>
+
+	<ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="searchEmployees(minSalary.value, maxSalary.value)">
+		<ng-template ngbPaginationPrevious>Prev</ng-template>
+		<ng-template ngbPaginationNext>Next</ng-template>
+	</ngb-pagination>
+
   </div>
 </div>
