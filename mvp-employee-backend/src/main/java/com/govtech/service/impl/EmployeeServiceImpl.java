@@ -24,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployeesByCriteria(double minSalary,
+    public Page<Employee> getEmployeesByCriteria(double minSalary,
                                                  double maxSalary,
                                                  int offset,
                                                  int limit,
@@ -38,8 +38,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             sort.descending();
         }
         Pageable pageable = PageRequest.of(offset, limit, sort);
-        Page<Employee> employeesPage = employeeRepo.findBySalaryBetween( minSalary, maxSalary, pageable);
-        return employeesPage.getContent();
+        Page<Employee> employeesPage = null;
+        if(minSalary < 0 && maxSalary < 0){
+            employeesPage  = employeeRepo.findAll(pageable);
+        }else{
+            employeesPage  = employeeRepo.findBySalaryBetween( minSalary, maxSalary, pageable);
+        }
+
+        return employeesPage;
     }
 
     @Override

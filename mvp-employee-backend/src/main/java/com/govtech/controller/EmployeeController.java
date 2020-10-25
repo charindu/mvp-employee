@@ -13,6 +13,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +60,8 @@ public class EmployeeController {
     @GetMapping(path = "/users")
     public ResponseEntity<Map> getUsersExt(@RequestParam(name = "minSalary") String reqMinSalary,
                                       @RequestParam(name = "maxSalary") String reqMaxSalary,
-                                      @RequestParam(name = "offset") String reqOffset,
-                                      @RequestParam(name = "limit") String reqLimit,
+                                      @RequestParam(name = "offset", defaultValue = "0") String reqOffset,
+                                      @RequestParam(name = "limit", defaultValue = "30") String reqLimit,
                                       @RequestParam(name = "sort") String sort){
 
         Map<String, Object> returnMap = new HashMap<>();
@@ -83,8 +84,9 @@ public class EmployeeController {
             isValidParams = false;
         }
         if(isValidParams){
-            List<Employee> employeeList =  employeeService.getEmployeesByCriteria( minSalary, maxSalary, offset, limit, sortOrder, sortColumn);
-            returnMap.put("results", employeeList);
+            Page<Employee> employeeList =  employeeService.getEmployeesByCriteria( minSalary, maxSalary, offset, limit, sortOrder, sortColumn);
+            returnMap.put("results", employeeList.getContent());
+            returnMap.put("collectionSize", employeeList.getTotalElements());
             returnMap.put("status", HttpStatus.OK.value());
         }
 
