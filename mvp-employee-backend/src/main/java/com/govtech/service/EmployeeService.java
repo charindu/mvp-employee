@@ -16,5 +16,7 @@ public interface EmployeeService {
 
     boolean deleteEmployeeById( Long id);
 
+    List<Employee> getAllEmployees();
+
 }
 

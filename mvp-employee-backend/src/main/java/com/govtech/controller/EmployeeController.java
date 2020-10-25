@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class EmployeeController {
 
@@ -150,6 +151,12 @@ public class EmployeeController {
             returnMap.put("status", HttpStatus.NO_CONTENT.value());
         }
         return ResponseEntity.ok(returnMap);
+    }
+
+    @GetMapping(path = "/allusers")
+    public List<Employee> getUsers(){
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        return employeeList;
     }
 
     //Exception handler
