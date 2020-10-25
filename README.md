@@ -24,4 +24,4 @@ npm start
 
 ## Note
 
-Input files(csv or txt) is located inside 'mvp-employee-backend/batch/input' directory. Input file name should be followed employee.csv or employee.txt
+Input file(csv or txt) is located inside 'mvp-employee-backend/batch/input' directory. Input file name should be followed employee.csv or employee.txt
